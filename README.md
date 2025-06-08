@@ -1,3 +1,5 @@
 # APIについて
 掲示板の更新APIです。  
-現在作成中です。でき次第、お知らせします。
+# 使い方
+https://bulletin-board-api-ztse.onrender.com/post/投稿ナンバー  
+で投稿情報を取得できます。
