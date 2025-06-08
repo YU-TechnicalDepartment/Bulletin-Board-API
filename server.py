@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from flask import Flask, request, jsonify, Response
+from flask import Flask, request, Response
 import requests
 import os
 import json
@@ -15,12 +15,11 @@ def get_post(number):
     if response.status_code != 200:
         return Response(json.dumps({"error": "APIのデータ取得に失敗しました"}, ensure_ascii=False), content_type="application/json"), 500
 
-    # ✅ レスポンスのエンコーディングをUTF-8に明示的に設定
-    response.encoding = "utf-8"
+    response.encoding = "utf-8"  # ✅ UTF-8 を適用
     data = response.json()
 
     if 0 <= number < len(data):
-        return Response(json.dumps(data[number], ensure_ascii=False), content_type="application/json")  # ✅ 修正
+        return Response(json.dumps(data[number], ensure_ascii=False), content_type="application/json")  # ✅ JSONレスポンスの Content-Type を指定
     else:
         return Response(json.dumps({"error": "投稿が見つかりません"}, ensure_ascii=False), content_type="application/json"), 404
 
