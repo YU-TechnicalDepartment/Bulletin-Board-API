@@ -2,10 +2,10 @@
 from flask import Flask, request, jsonify, Response
 import requests
 import os
-import json  # ← JSON処理用
+import json
 
 app = Flask(__name__)
-app.config['JSON_AS_ASCII'] = False  # ← 日本語のエスケープ防止
+app.config['JSON_AS_ASCII'] = False  # 日本語のエスケープ防止
 
 @app.route("/post/<int:number>", methods=["GET"])
 def get_post(number):
@@ -15,6 +15,8 @@ def get_post(number):
     if response.status_code != 200:
         return Response(json.dumps({"error": "APIのデータ取得に失敗しました"}, ensure_ascii=False), content_type="application/json"), 500
 
+    # ✅ レスポンスのエンコーディングをUTF-8に明示的に設定
+    response.encoding = "utf-8"
     data = response.json()
 
     if 0 <= number < len(data):
